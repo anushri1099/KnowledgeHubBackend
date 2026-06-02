@@ -26,8 +26,8 @@ public class TechStack {
     @Column(nullable = false, unique = true)
     private String techstackName;
 
-    @OneToMany(mappedBy = "techStack", cascade = CascadeType.ALL)
-    private List<CourseItem> courses;
+//    @OneToMany(mappedBy = "techStack", cascade = CascadeType.ALL)
+//    private List<CourseItem> courses;
     
 	public String getTechstackName() {
 		return techstackName;

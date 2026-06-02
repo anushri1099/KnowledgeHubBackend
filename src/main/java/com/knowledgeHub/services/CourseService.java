@@ -59,13 +59,20 @@ public class CourseService {
         return ResponseEntity.ok("Course deleted successfully");
     }
     
+
+    
     public ResponseEntity<?> getCoursesByTechStack(String name) {
+
+        if (name == null || name.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Tech stack name is required");
+        }
 
         List<CourseItem> courses =
                 courseRepo.findByTechStack_TechstackNameIgnoreCase(name);
 
         if (courses.isEmpty()) {
-            return ResponseEntity.badRequest().body("No courses found for this tech stack");
+            return ResponseEntity.status(404)
+                    .body("No courses found for tech stack: " + name);
         }
 
         return ResponseEntity.ok(courses);
