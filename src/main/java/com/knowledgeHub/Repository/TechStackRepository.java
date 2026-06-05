@@ -10,7 +10,7 @@ import com.knowledgeHub.Entity.TechStack;
 @Repository
 public interface TechStackRepository extends JpaRepository<TechStack, Long> {
 	TechStack findByTechstackName(String techstackName);
-	void deleteByTechstackName(String techStackName);
+	long deleteByTechstackName(String techStackName);
 	boolean existsByTechstackName(String techStackName);
 	Optional<TechStack> findByTechstackNameIgnoreCase(String techStackName);
 }

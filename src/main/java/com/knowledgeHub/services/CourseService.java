@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +32,7 @@ public class CourseService {
         //If not found → return clean message
         if (optional.isEmpty()) {
             return ResponseEntity
-                    .badRequest()
+                    .status(HttpStatus.NOT_FOUND)
                     .body("Tech stack not found");
         }
 
@@ -51,28 +52,24 @@ public class CourseService {
     public ResponseEntity<?> deleteCourse(Long id) {
 
         if (!courseRepo.existsById(id)) {
-            return ResponseEntity.badRequest().body("Course not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
         }
 
         courseRepo.deleteById(id);
 
         return ResponseEntity.ok("Course deleted successfully");
     }
-    
 
-    
+    public List<CourseItem> getAllCourses(){
+        return courseRepo.findAll();
+    }
     public ResponseEntity<?> getCoursesByTechStack(String name) {
-
-        if (name == null || name.trim().isEmpty()) {
-            return ResponseEntity.badRequest().body("Tech stack name is required");
-        }
 
         List<CourseItem> courses =
                 courseRepo.findByTechStack_TechstackNameIgnoreCase(name);
 
         if (courses.isEmpty()) {
-            return ResponseEntity.status(404)
-                    .body("No courses found for tech stack: " + name);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No courses found for this tech stack");
         }
 
         return ResponseEntity.ok(courses);

@@ -1,8 +1,10 @@
 package com.knowledgeHub.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,18 +32,30 @@ public class TechStackController {
 		return service.saveAll(dtoList);
 	}
 
+
+	
 	@PostMapping("/saveStack")
-	public String create(@RequestBody TechStackDTO dto) {
+	public ResponseEntity<?> create(@RequestBody TechStackDTO dto) {
 
-		ResponseEntity<?> saved = service.save(dto);
-		// return ResponseEntity.ok(saved);
+	    ResponseEntity<?> saved = service.save(dto);
 
-		if (saved.getStatusCode().is2xxSuccessful()) {
-			return "Saved"; // success
-		} else {
-			return "Duplicate"; // error
-		}
+	    if (saved.getStatusCode().is2xxSuccessful()) {
+	        return ResponseEntity.ok(
+	                Map.of(
+	                        "status", "success",
+	                        "message", "Saved"
+	                )
+	        );
+	    } else {
+	        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+	                Map.of(
+	                        "status", "duplicate",
+	                        "message", "Already exists"
+	                )
+	        );
+	    }
 	}
+
 
 	@GetMapping("/getAll")
 	public List<TechStack> getAll() {

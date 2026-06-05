@@ -1,12 +1,14 @@
 package com.knowledgeHub.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.knowledgeHub.DTO.TechStackDTO;
 import com.knowledgeHub.Entity.TechStack;
+import com.knowledgeHub.Repository.CourseRepository;
 import com.knowledgeHub.Repository.TechStackRepository;
 
 import java.util.List;
@@ -16,6 +18,7 @@ public class TechStackService {
 
 	@Autowired
 	private TechStackRepository repository;
+	private CourseRepository courseRepository;
 
 
 	public ResponseEntity<?> save(TechStackDTO dto) {
@@ -38,16 +41,18 @@ public class TechStackService {
 	public ResponseEntity<?> deleteByName(String name) {
 
 	    if (!repository.existsByTechstackName(name)) {
-	        return ResponseEntity
-	                .badRequest()
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
 	                .body("Tech stack not found");
 	    }
 
+	    // ✅ Delete child records FIRST
+	    //courseRepository.deleteByTechstackName(name);
+
+	    // ✅ Then delete parent
 	    repository.deleteByTechstackName(name);
 
 	    return ResponseEntity.ok("Deleted successfully");
 	}
-
 
 	public ResponseEntity<?> saveAll(List<TechStackDTO> dtoList) {
 
