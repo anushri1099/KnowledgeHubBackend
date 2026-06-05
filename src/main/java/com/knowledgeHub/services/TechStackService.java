@@ -12,12 +12,14 @@ import com.knowledgeHub.Repository.CourseRepository;
 import com.knowledgeHub.Repository.TechStackRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TechStackService {
 
 	@Autowired
 	private TechStackRepository repository;
+	@Autowired
 	private CourseRepository courseRepository;
 
 
@@ -40,16 +42,23 @@ public class TechStackService {
 	@Transactional
 	public ResponseEntity<?> deleteByName(String name) {
 
-	    if (!repository.existsByTechstackName(name)) {
+	    Optional<TechStack> techStackOpt = repository.findByTechstackNameIgnoreCase(name);
+
+	    if (techStackOpt.isEmpty()) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
 	                .body("Tech stack not found");
 	    }
 
-	    // ✅ Delete child records FIRST
-	    //courseRepository.deleteByTechstackName(name);
+	    TechStack techStack = techStackOpt.get();
 
-	    // ✅ Then delete parent
-	    repository.deleteByTechstackName(name);
+	    // ✅ FIXED getter name (IMPORTANT)
+	    Long techId = techStack.getTechStackId();
+
+	    // ✅ Step 1: delete child
+	    courseRepository.deleteByTechStack_TechStackId(techId);
+
+	    // ✅ Step 2: delete parent
+	    repository.deleteById(techId);
 
 	    return ResponseEntity.ok("Deleted successfully");
 	}

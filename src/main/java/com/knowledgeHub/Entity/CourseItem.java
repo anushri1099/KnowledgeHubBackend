@@ -58,4 +58,5 @@ public class CourseItem {
 	public void setTechStack(TechStack techStack) {
 		this.techStack = techStack;
 	}
+	
 }

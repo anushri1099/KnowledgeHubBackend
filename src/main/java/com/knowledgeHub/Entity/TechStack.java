@@ -26,8 +26,20 @@ public class TechStack {
     @Column(nullable = false, unique = true)
     private String techstackName;
 
-//    @OneToMany(mappedBy = "techStack", cascade = CascadeType.ALL)
-//    private List<CourseItem> courses;
+
+    
+    public Long getTechStackId() {
+		return techStackId;
+	}
+
+	public void setTechStackId(Long techStackId) {
+		this.techStackId = techStackId;
+	}
+
+	@OneToMany(mappedBy = "techStack",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+ private List<CourseItem> courses;
     
 	public String getTechstackName() {
 		return techstackName;

@@ -9,6 +9,15 @@ import lombok.*;
 public class TechStackDTO {
    
 	private String techstackName;
+	private Long techStackId;
+
+	public Long getTechStackId() {
+		return techStackId;
+	}
+
+	public void setTechStackId(Long techStackId) {
+		this.techStackId = techStackId;
+	}
 
 	public String getTechstackName() {
 		return techstackName;
