@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "answers")
+@Table(name = "answers",schema="knowledge_hub")
 public class Answers {
 
     public String getAnswerText() {

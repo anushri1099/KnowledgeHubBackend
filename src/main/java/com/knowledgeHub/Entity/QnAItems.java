@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "qna_items")
+@Table(name = "qna_items",schema="knowledge_hub")
 public class QnAItems {
 
     public String getTitle() {

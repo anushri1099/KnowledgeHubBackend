@@ -14,7 +14,7 @@ import lombok.*;
 
 
 @Entity
-@Table(name ="tech_stacks")
+@Table(name ="tech_stacks",schema="knowledge_hub")
 @Getter
 @Setter
 public class TechStack {
@@ -26,9 +26,7 @@ public class TechStack {
     @Column(nullable = false, unique = true)
     private String techstackName;
 
-
-    
-    public Long getTechStackId() {
+	public Long getTechStackId() {
 		return techStackId;
 	}
 
@@ -36,11 +34,6 @@ public class TechStack {
 		this.techStackId = techStackId;
 	}
 
-	@OneToMany(mappedBy = "techStack",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
- private List<CourseItem> courses;
-    
 	public String getTechstackName() {
 		return techstackName;
 	}
@@ -48,7 +41,4 @@ public class TechStack {
 	public void setTechstackName(String techstackName) {
 		this.techstackName = techstackName;
 	}
-
-
-
 }
