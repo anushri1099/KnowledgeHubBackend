@@ -36,10 +36,10 @@ public class TechStack {
 		this.techStackId = techStackId;
 	}
 
-	@OneToMany(mappedBy = "techStack",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
- private List<CourseItem> courses;
+//	@OneToMany(mappedBy = "techStack",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true)
+// private List<CourseItem> courses;
     
 	public String getTechstackName() {
 		return techstackName;

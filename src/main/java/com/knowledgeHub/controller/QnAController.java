@@ -37,5 +37,9 @@ public class QnAController {
 	public ResponseEntity<?> getQuestionWithAnswers(@PathVariable Long id) {
 	    return ResponseEntity.ok(service.getQuestionWithAnswers(id));
 	}
+	@GetMapping("/questions")
+	public ResponseEntity<?> getAllQuestions() {
+	    return ResponseEntity.ok(service.getAllQuestions());
+	}
 
 }

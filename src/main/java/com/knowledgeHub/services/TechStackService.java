@@ -1,14 +1,19 @@
 package com.knowledgeHub.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.knowledgeHub.DTO.DashboardStatsDTO;
 import com.knowledgeHub.DTO.TechStackDTO;
+import com.knowledgeHub.Entity.CourseItem;
 import com.knowledgeHub.Entity.TechStack;
+import com.knowledgeHub.Repository.AnswerRepository;
 import com.knowledgeHub.Repository.CourseRepository;
+import com.knowledgeHub.Repository.QnARepository;
 import com.knowledgeHub.Repository.TechStackRepository;
 
 import java.util.List;
@@ -21,6 +26,10 @@ public class TechStackService {
 	private TechStackRepository repository;
 	@Autowired
 	private CourseRepository courseRepository;
+	@Autowired
+	private QnARepository questionRepository;
+	@Autowired
+	private AnswerRepository answerRepository;
 
 
 	public ResponseEntity<?> save(TechStackDTO dto) {
@@ -92,5 +101,17 @@ public class TechStackService {
 	    List<TechStack> saved = repository.saveAll(newList);
 
 	    return ResponseEntity.ok(saved);
+	}
+	
+	public DashboardStatsDTO getStats() {
+
+	    DashboardStatsDTO stats = new DashboardStatsDTO();
+
+	    stats.setCourses(courseRepository.count());
+	    stats.setQuestions(questionRepository.count());
+	    stats.setAnswers(answerRepository.count());
+	    stats.setTechStacks(repository.count());
+
+	    return stats;
 	}
 }
