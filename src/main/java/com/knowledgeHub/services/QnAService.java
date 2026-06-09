@@ -29,8 +29,8 @@ public class QnAService {
         return questionRepo.save(q);
     }
 
-    // Add answer
-    public Answers addAnswer(Long questionId, AnswerDTO dto) {
+    //Save answer
+    public String addAnswer(Long questionId, AnswerDTO dto) {
 
         QnAItems question = questionRepo.findById(questionId)
                 .orElseThrow(() -> new RuntimeException("Question not found"));
@@ -38,8 +38,9 @@ public class QnAService {
         Answers ans = new Answers();
         ans.setAnswerText(dto.getAnswerText());
         ans.setQuestion(question); // FK
+        answerRepo.save(ans);
 
-        return answerRepo.save(ans);
+        return "Answer saved successfully !";
     }
     
     public QnAItems getQuestionWithAnswers(Long id) {
