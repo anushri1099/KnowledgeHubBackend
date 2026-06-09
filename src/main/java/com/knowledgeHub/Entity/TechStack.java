@@ -33,7 +33,6 @@ public class TechStack {
 	public void setTechStackId(Long techStackId) {
 		this.techStackId = techStackId;
 	}
-
 	public String getTechstackName() {
 		return techstackName;
 	}

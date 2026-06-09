@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.knowledgeHub.DTO.DashboardStatsDTO;
 import com.knowledgeHub.DTO.TechStackDTO;
 import com.knowledgeHub.Entity.TechStack;
 import com.knowledgeHub.services.TechStackService;
@@ -66,4 +67,10 @@ public class TechStackController {
 	public ResponseEntity<?> deleteByName(@PathVariable String name) {
 		return service.deleteByName(name);
 	}
+	
+	@GetMapping("/stats")
+	public ResponseEntity<DashboardStatsDTO> getStats() {
+	    return ResponseEntity.ok(service.getStats());
+	}
 }
+

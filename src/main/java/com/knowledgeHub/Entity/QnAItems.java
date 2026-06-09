@@ -17,15 +17,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "qna_items",schema="knowledge_hub")
 public class QnAItems {
-
-    public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public String getQuestion() {
 		return question;
 	}
@@ -46,10 +37,16 @@ public class QnAItems {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-
     private String question;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answers> answers;
 }

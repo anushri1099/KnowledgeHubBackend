@@ -1,6 +1,8 @@
 package com.knowledgeHub.services;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,6 @@ public class QnAService {
     // Save question
     public QnAItems saveQuestion(QuestionDTO dto) {
         QnAItems q = new QnAItems();
-        q.setTitle(dto.getTitle());
         q.setQuestion(dto.getQuestion());
         return questionRepo.save(q);
     }
@@ -45,5 +46,21 @@ public class QnAService {
 
         return questionRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Question not found"));
+    }
+    
+    public List<QuestionDTO> getAllQuestions() {
+
+    	List<QuestionDTO> listofquestions =  questionRepo.findAll()
+                .stream()
+                .map(q -> {
+                    QuestionDTO dto = new QuestionDTO();
+
+                    dto.setId(q.getId());
+                    dto.setQuestion(q.getQuestion());
+
+                    return dto;
+                })
+                .toList();
+        return listofquestions;
     }
 }
